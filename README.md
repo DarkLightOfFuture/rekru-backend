@@ -1,3 +1,1 @@
-# rekru
-
-
+To execute tests: `npm test`
