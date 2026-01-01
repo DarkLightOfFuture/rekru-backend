@@ -52,13 +52,13 @@ class EnergyMix {
 // Returns fetched data or undefined
 async function fetchEnergyData(from, to) {
     const url = `https://api.carbonintensity.org.uk/generation/${from}/${to}`;
-    console.log(url);
+    
     return await fetch(url, {
         method: "GET"
     })
     .then(async res => {
         const d = await res.json();
-
+        console.log(d);
         if (res.ok)
             return d.data.map(el => ({ ...el, date: el.from.split('T')[0]}));
         else
