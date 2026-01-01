@@ -90,7 +90,7 @@ app.get('/energy-mix', async (req, res) => {
     const days = 3;
 
     const today = new Date();
-    const dateStr = today.toISOString().split('T')[0]; // "2026-01-02"
+    const dateStr = today.toISOString().split('T')[0]; 
     const utcToday = new Date(dateStr + 'T00:00:00.000Z');
 
     const from = utcToday.toISOString();
@@ -98,7 +98,7 @@ app.get('/energy-mix', async (req, res) => {
     const data = await fetchEnergyData(from, to);
 
     if (data != undefined) {
-        const recordsByDays = sortByDay(data, today, days);
+        const recordsByDays = sortByDay(data, utcToday, days);
 
         const dailyAvgs = [];
         Object.keys(recordsByDays).forEach(date => {
