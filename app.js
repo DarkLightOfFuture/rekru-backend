@@ -58,8 +58,7 @@ async function fetchEnergyData(from, to) {
     })
     .then(async res => {
         const d = await res.json();
-        console.log(d.data[1]);
-        console.log(d.data[1].generationmix);
+        
         if (res.ok)
             return d.data.map(el => ({ ...el, date: el.from.split('T')[0]}));
         else
@@ -71,16 +70,13 @@ async function fetchEnergyData(from, to) {
 function sortByDay(data, crrDate, daysAmount) {
     const recordsByDays = {};
 
-    for (let i = 0; i < daysAmount; i++)
-        recordsByDays[createDate(crrDate, i).toISOString().split('T')[0]] = []
-
     data.forEach(record => {
+        if (!recordsByDays[record.date]) {
+            recordsByDays[record.date] = [];
+        }
+        
         const mix = {};
         record.generationmix.forEach(el => mix[el.fuel] = el.perc);
-
-        if (!recordsByDays[record.date]) 
-            recordsByDays[record.date] = [];
-        
         recordsByDays[record.date].push(mix);
     });
 
@@ -94,7 +90,7 @@ app.get('/energy-mix', async (req, res) => {
     const days = 3;
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setUTCHours(0, 0, 0, 0);
 
     const from = today.toISOString();
     const to = createDate(today, days - 1).toISOString();
