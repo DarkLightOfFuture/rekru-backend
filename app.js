@@ -1,4 +1,6 @@
 ﻿'use strict';
+process.env.TZ = 'Europe/Warsaw';
+
 var express = require('express');
 var cookieParser = require('cookie-parser');
 
@@ -89,12 +91,11 @@ function sortByDay(data, crrDate, daysAmount) {
 app.get('/energy-mix', async (req, res) => {
     const days = 3;
 
-    const today = new Date();
-    const dateStr = today.toISOString().split('T')[0]; 
-    const utcToday = new Date(dateStr + 'T00:00:00.000Z');
+    const today = new Date(); 
+    today.setUTCHours(0, 0, 0, 0);
 
-    const from = utcToday.toISOString();
-    const to = createDate(utcToday, days - 1).toISOString();
+    const from = today.toISOString();
+    const to = createDate(today, days - 1).toISOString();
     const data = await fetchEnergyData(from, to);
 
     if (data != undefined) {
