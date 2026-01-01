@@ -58,8 +58,8 @@ async function fetchEnergyData(from, to) {
     })
     .then(async res => {
         const d = await res.json();
-        console.log(d.data[0]);
-        console.log(d.data[0].generationmix);
+        console.log(d.data[1]);
+        console.log(d.data[1].generationmix);
         if (res.ok)
             return d.data.map(el => ({ ...el, date: el.from.split('T')[0]}));
         else
