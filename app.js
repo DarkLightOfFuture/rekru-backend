@@ -70,7 +70,7 @@ async function fetchEnergyData(from, to) {
 function sortByDay(data, crrDate, daysAmount) {
     const recordsByDays = {};
 
-    for (let i = 0; i < daysAmount; i++)
+    for (let i = 0; i < daysAmount - 1; i++)
         recordsByDays[createDate(crrDate, i).toISOString().split('T')[0]] = []
 
     data.forEach(record => {
@@ -96,7 +96,7 @@ app.get('/energy-mix', async (req, res) => {
     today.setUTCHours(0, 0, 0, 0);
 
     const from = today.toISOString();
-    const to = createDate(today, days).toISOString();
+    const to = createDate(today, days - 1).toISOString();
     const data = await fetchEnergyData(from, to);
 
     if (data != undefined) {
