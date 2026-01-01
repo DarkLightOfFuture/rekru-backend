@@ -77,6 +77,9 @@ function sortByDay(data, crrDate, daysAmount) {
         const mix = {};
         record.generationmix.forEach(el => mix[el.fuel] = el.perc);
 
+        if (!recordsByDays[record.date]) 
+            recordsByDays[record.date] = [];
+        
         recordsByDays[record.date].push(mix);
     });
 
