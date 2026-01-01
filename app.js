@@ -96,7 +96,7 @@ app.get('/energy-mix', async (req, res) => {
     today.setUTCHours(0, 0, 0, 0);
 
     const from = today.toISOString();
-    const to = createDate(today, days).toISOString();
+    const to = createDate(today, days - 1).toISOString();
     const data = await fetchEnergyData(from, to);
 
     if (data != undefined) {
@@ -141,7 +141,6 @@ app.get('/optimal-charging-window', async (req, res) => {
     }
 
     const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
 
     const dayLater = createDate(today, 1);
     const threeDaysLater = createDate(dayLater, 2); 
