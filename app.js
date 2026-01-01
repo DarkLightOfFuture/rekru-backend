@@ -14,7 +14,7 @@ var server = app.listen(app.get('port'), function () {
 
 // Creates date with <offset> from <crrDate>
 function createDate(crrDate, offset) {
-    const date = new Date(crrDate);
+    const date = new Date(crrDate.getTime());
     date.setDate(date.getDate() + offset);
 
     return date;
@@ -93,7 +93,7 @@ app.get('/energy-mix', async (req, res) => {
     const days = 3;
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setUTCHours(0, 0, 0, 0);
 
     const from = today.toISOString();
     const to = createDate(today, days - 1).toISOString();
