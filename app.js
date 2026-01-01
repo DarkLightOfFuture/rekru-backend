@@ -90,10 +90,11 @@ app.get('/energy-mix', async (req, res) => {
     const days = 3;
 
     const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
+    const dateStr = today.toISOString().split('T')[0]; // "2026-01-02"
+    const utcToday = new Date(dateStr + 'T00:00:00.000Z');
 
-    const from = today.toISOString();
-    const to = createDate(today, days - 1).toISOString();
+    const from = utcToday.toISOString();
+    const to = createDate(utcToday, days - 1).toISOString();
     const data = await fetchEnergyData(from, to);
 
     if (data != undefined) {
