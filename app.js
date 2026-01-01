@@ -99,7 +99,7 @@ app.get('/energy-mix', async (req, res) => {
     const data = await fetchEnergyData(from, to);
 
     if (data != undefined) {
-        const recordsByDays = sortByDay(data, utcToday, days);
+        const recordsByDays = sortByDay(data, today, days);
 
         const dailyAvgs = [];
         Object.keys(recordsByDays).forEach(date => {
